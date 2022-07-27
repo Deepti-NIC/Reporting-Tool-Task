@@ -1,0 +1,118 @@
+/* CREATE TABLE */
+CREATE TABLE server_details(
+Private_IP VARCHAR(100),
+Public_IP VARCHAR(100),
+Project_Name VARCHAR(100),
+Website_Name VARCHAR(100),
+Designed_By VARCHAR(100),
+Managed_By VARCHAR(100),
+CUC VARCHAR(100),
+VM VARCHAR(100),
+OS VARCHAR(100),
+VA date,
+Server_hardening VARCHAR(100),
+Antivirus_Name_ VARCHAR(100),
+SOC_Entry VARCHAR(100),
+Warnings VARCHAR(100),
+SSLEnd_Date date,
+AuditStart_Date date,
+AuditEnd_Date date,
+Backup_Policy VARCHAR(100),
+Bkp_Frequeny_ VARCHAR(100),
+Bkp_Retention VARCHAR(100),
+Bkp_Managed_by VARCHAR(100)
+);
+
+insert into server_details values('10.247.2.106','164.100.65.25','msde','msde.gov.in','NIC-CMF','Indusnet','sd-01','10.247.2.106','linux', '30-12-2020','','','','','2023-01-13','2020-02-14','2022-02-15','','','','');
+
+
+Alter table server_details
+ADD Primary key(Private_IP);
+
+
+create table user_details
+(
+username varchar(20) NOT NULL PRIMARY KEY,
+password varchar(20)
+);
+
+insert into user_details values
+(root, 123);
+
+
+/* CREATE TABLE */
+CREATE TABLE vc_details(
+VC_Mode VARCHAR(10),
+VC_Id VARCHAR(20) DEFAULT NULL,
+VC_Date date,
+VC_STime time,
+VC_ETime time,
+Email_Sent VARCHAR(10),
+Description VARCHAR(500),
+CName VARCHAR(50),
+CDept VARCHAR(50),
+CDesig VARCHAR(50),
+CNumber INT UNSIGNED,
+CEmail VARCHAR(50),
+CEmailDated date,
+CRemarks VARCHAR(20),
+Edited_By VARCHAR(100),
+Edited_On datetime,
+ID int NOT NULL AUTO_INCREMENT PRIMARY KEY 
+);
+
+Alter table vc_details
+ADD Primary key(VCID);
+
+
+/* CREATE TABLE */
+CREATE TABLE webcast_details(
+EventName VARCHAR(10),
+Dept varchar(10),
+Web_Date date,
+Web_Time time,
+duration int(5),
+Edited_By VARCHAR(100),
+Edited_On datetime
+);
+
+Alter table webcast_details
+ADD Primary key(WebID);
+
+
+ create table vc_studios (id integer, studio varchar(100));
+insert into vc_studios values (1, 'DL-SkillDevelopment');
+insert into vc_studios values (2, 'Minister-MSDE');
+insert into vc_studios values (3, 'MOS-MSDE');
+insert into vc_studios values (4, 'PTI-MSDE');
+
+
+
+liveEvents_Details
+nodes
+
+
+DROP TRIGGER IF EXISTS downloads_BI;
+DELIMITER //
+CREATE TRIGGER downloads_BI
+BEFORE INSERT ON test_time FOR EACH ROW
+BEGIN
+    IF (NEW.date IS NULL) THEN -- change the isnull check for the default used
+        SET NEW.date = now();
+    END IF;
+END//
+DELIMITER ;
+
+
+SQL Queries
+
+count vc mode wise: select VC_Mode, COUNT(VC_Mode) from vc_details GROUP BY VC_Mode
+select COUNT(VC_Mode) AS count, DATE_FORMAT(VC_Date,'%m') AS month from vc_details GROUP BY month;
+count vc month wise: "select COUNT(VC_Mode) AS count, DATE_FORMAT(VC_Date,'%M') AS month from vc_details GROUP BY month ORDER BY Month(VC_Date);";
+
+today's vc: select COUNT(ID) from vc_details where VC_Date=CURDATE();
+
+tomorrow's vc: select * from vc_details where VC_Date=CURDATE()+1;
+
+
+update vc_details set VC_Mode = replace(VC_Mode, ‘3’, ‘Webroom3’);
